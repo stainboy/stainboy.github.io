@@ -433,7 +433,7 @@ body {
   font-weight: 400;
   line-height: 1.5;
   color: #666;
-  background: #fafafa url(../images/body-bg.jpg) 0 0 repeat;
+  background: #fafafa url(../img/body-bg.jpg) 0 0 repeat;
 }
 
 p {
@@ -451,7 +451,7 @@ header {
   padding-top: 40px;
   padding-bottom: 40px;
   font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
-  background: #2e7bcf url(../images/header-bg.jpg) 0 0 repeat-x;
+  background: #2e7bcf url(../img/header-bg.jpg) 0 0 repeat-x;
   border-bottom: solid 1px #275da1;
 }
 
@@ -504,7 +504,7 @@ aside#sidebar {
   padding-left: 20px;
   font-size: 12px;
   line-height: 1.3;
-  background: transparent url(../images/sidebar-bg.jpg) 0 0 no-repeat;
+  background: transparent url(../img/sidebar-bg.jpg) 0 0 no-repeat;
 }
 
 aside#sidebar p.repo-owner,
@@ -534,7 +534,7 @@ header a.button {
   position: absolute;
   top: 0;
   right: 0;
-  background: transparent url(../images/github-button.png) 0 0 no-repeat;
+  background: transparent url(../img/github-button.png) 0 0 no-repeat;
 }
 aside a.button {
   display: block;
@@ -542,7 +542,7 @@ aside a.button {
   padding-left: 64px;
   margin-bottom: 20px;
   font-size: 21px;
-  background: transparent url(../images/download-button.png) 0 0 no-repeat;
+  background: transparent url(../img/download-button.png) 0 0 no-repeat;
 }
 
 code, pre {
@@ -579,8 +579,115 @@ ul, ol, dl {
 
 /* HOME PAGE */
 
+@font-face {
+  font-family: 'iconfont';
+  src: url("http://at.alicdn.com/t/font_1395307880_4954178.eot");
+  /* IE9*/
+  src: url("http://at.alicdn.com/t/font_1395307880_4954178.eot?#iefix") format("embedded-opentype"), url("http://at.alicdn.com/t/font_1395307880_9161122.woff") format("woff"), url("http://at.alicdn.com/t/font_1395307880_4053228.ttf") format("truetype"), url("http://at.alicdn.com/t/font_1395307880_9707928.svg#iconfont") format("svg");
+  /* iOS 4.1- */ 
+}
+
+.posts>a:hover>h2 {
+  color: rgb(160,221,255) !important;
+}
 .posts>.summary {
   margin-bottom: 20px;
+}
+.splitter {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  height: 100px;
+  border-color: rgba(0,39,59,.08);
+}
+.section-title {
+  font-size: 1.5em;
+  margin-top: 20px;
+}
+p.meta {
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif;
+  font-style: italic;
+}
+
+
+#sidebar .category ul {
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  font-size: 1.2em;
+  font-weight: bold;
+  list-style: none;
+  margin: 10px 10px;
+  -webkit-padding-start: 0px; 
+}
+#sidebar .category ul li {
+border-bottom: 1px solid #777;
+height: 40px; }
+#sidebar .category ul li a {
+display: block;
+line-height: 40px;
+text-decoration: none;
+color: #777;
+text-transform: capitalize;
+width: 100%; }
+#sidebar .category ul li a:hover, #sidebar .category ul li a:focus {
+color: rgb(160,221,255); }
+#sidebar .category ul li a:hover span, #sidebar .category ul li a:focus span {
+border: 1px solid rgb(160,221,255); }
+#sidebar .category ul li a span {
+  display: inline-block;
+  float: right;
+  border: 1px solid #777;
+  border-radius: 15px 15px 15px 15px;
+  padding: 0px 8px;
+  line-height: 20px;
+  margin-top: 10px;
+}
+
+#sidebar .navigator {
+  margin-left: 10px;
+  margin-bottom: 20px;
+}
+#sidebar .navigator a {
+    padding: 10px;
+    font-family: 'iconfont';
+    -display: inline-block;
+    border-radius: 50% 50% 50% 50%;
+    color: #777;
+    border: 1px solid #777;
+    /*box-shadow: inset 0 1px 10px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(0, 0, 0, 0.5);*/
+    text-decoration: none; 
+    font-size: 1.5em;
+}
+#sidebar .navigator a:hover {
+  color: rgb(160,221,255);
+  border: 1px solid rgb(160,221,255);
+}
+
+.category {
+  margin-bottom: 30px;
+}
+.category>h1 {
+  text-transform: capitalize;
+}
+.category>.posts {
+  margin-left: 20px;
+  padding: 5px;
+}
+.category>.posts>a>span {
+  font-family: 'Architects Daughter', 'Helvetica Neue', Helvetica, Arial, serif;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-right: 10px;
+}
+.category>.posts>a:hover>span {
+    text-decoration: underline;
+}
+
+.category>.posts>span.meta {
+  font-family: 'Helvetica Neue', Helvetica, Arial, serif;
+  font-style: italic;
+  margin-left: 10px;
+  font-size: 1em;
 }
 
 /* COMMON STYLES */

@@ -1,0 +1,19 @@
+---
+layout: default
+title: Miles Chen's Space powered by Github Pages
+---
+<div id="home">
+    {% for cat in site.categories %}
+        <div class="category">
+            <h1 id="{{ cat[0] }}">{{ cat[0] }}</h1>
+            {% for post in cat[1] %}
+                <div class="posts">
+                    <a href="{{ site.baseurl }}{{ post.url }}"><span>{{ post.title }}</span></a>
+                    -
+                    <span class="meta">{{ post.date | date: "%B %d, %Y" }}</span>
+                    <br/>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>

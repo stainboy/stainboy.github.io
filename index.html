@@ -3,15 +3,11 @@ layout: default
 title: Miles Chen's Space powered by Github Pages
 ---
 <div id="home">
-    <!-- <ul class="posts"> -->
-        {% for post in site.posts %}
-            <!-- <li> -->
-            <div class="posts">
-                <a href="{{ site.baseurl }}{{ post.url }}"><h2>{{ post.title }}</h2></a>
-                <p class="meta">{{ post.date | date_to_string }}</p>
-                <p class="summary">{{ post.description }}</p>
-            </div>
-            <!-- </li> -->
-        {% endfor %}
-    <!-- </ul> -->
+    {% for post in site.posts %}
+        <div class="posts">
+            <a href="{{ site.baseurl }}{{ post.url }}"><h2>{{ post.title }}</h2></a>
+            <p class="meta">{{ post.date | date: "%B %d, %Y" }}</p>
+            <p class="summary">{{ post.summary }}</p>
+        </div>
+    {% endfor %}
 </div>
