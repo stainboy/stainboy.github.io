@@ -3,6 +3,7 @@ layout: post
 title:  "Hello World"
 date:   2015-09-16 15:55:56
 categories: coding
+description: 这个系列是本人在工作或....2
 ---
 
 You'll find this post in your `_posts` directory - edit this post and re-build (or run with the `-w` switch) to see your changes!

@@ -1,2 +1,4 @@
-name: Miles Tech Blog
+name: Miles Space
+subtitle: Talk is cheap. Show me the code.
 markdown: redcarpet
+encoding: utf-8

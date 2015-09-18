@@ -577,6 +577,12 @@ ul, ol, dl {
 }
 
 
+/* HOME PAGE */
+
+.posts>.summary {
+  margin-bottom: 20px;
+}
+
 /* COMMON STYLES */
 
 hr {
@@ -811,7 +817,7 @@ dl dd {
   }
   header a.button {
     position: relative;
-    display: inline-block;
+    display: none;
     width: auto;
     height: auto;
     padding: 5px 10px;
@@ -841,6 +847,7 @@ dl dd {
     margin-top: 20px;
     background-image: none;
     border-top: solid 1px #ddd;
+    display: none;
   }
   aside#sidebar a.button {
     display: none;
