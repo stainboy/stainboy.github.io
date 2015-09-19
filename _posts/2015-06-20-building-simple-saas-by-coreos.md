@@ -8,6 +8,7 @@ summary: "2014年是Docker大红大火的一年， DevOps这个新名词+新职�
 本文会介绍此SaaS平台可以提供何种服务，其工作原理解析，以及最重要的，如何利用CoreOS搭建集群，如何利用Docker跑SAP Business One程序。本文面向开发，测试及DevOps同学。本文假设读者具有一定的容器基础，故行文不对Docker原理及使用作过多介绍。"
 ---
 
+![1c54b0f8]({{ site.BASE_PATH }}/assets/cloud/2015/1c54b0f8.PNG)
 
 2014年是Docker大红大火的一年， DevOps这个新名词+新职位就如雨后春笋般冒出尖角，蓬勃发展起来。与时俱进，笔者带领一支三人团队利用了CoreOS及Docker搭建了一套SaaS平台，用以提供完整套装的SAP Business One的预览环境。
 
@@ -37,6 +38,9 @@ summary: "2014年是Docker大红大火的一年， DevOps这个新名词+新职�
 * 前台
 系统前台是一个使用bootstrap + AngulaJS + SparkJAVA + Groovy开发的网站。展现给用户所有安装成功的nightly build的image，接受用户的选择且通过docker去创建和启动特定版本号的image，最终发送邮件通知用户完成且可使用这套环境作开发或测试工作了。Docker创建image的调度由fleet完成。
 
+![04e538df]({{ site.BASE_PATH }}/assets/cloud/2015/04e538df.PNG)
+![fd908555]({{ site.BASE_PATH }}/assets/cloud/2015/fd908555.PNG)
+![2b7e49ce]({{ site.BASE_PATH }}/assets/cloud/2015/2b7e49ce.PNG)
 
 ###如何搭建CoreOS集群###
 ####为什么是CoreOS####
@@ -184,7 +188,8 @@ cadvisor.service d5f5889d.../10.58.136.166 active running
 datanode.service 0e259400.../10.58.136.164 active running
 ... 
 {% endhighlight %}
- 
+
+![9eaa699e]({{ site.BASE_PATH }}/assets/cloud/2015/9eaa699e.PNG)
 
 关于如何使用fleet来创建任务以及如何调度任务，请参考CoreOS[官方文档](https://coreos.com/docs/launching-containers/launching/fleet-unit-files/)
 
