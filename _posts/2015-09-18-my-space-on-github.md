@@ -3,6 +3,7 @@ layout: post
 title:  "建站完成"
 date:   2015-09-18
 categories: coding
+description: "本站成功搭建在GitHub Pages上面"
 summary: "经过两天的努力，本站终于成功搭建在GitHub Pages上了。鸣谢好友[pchou]。"
 ---
 

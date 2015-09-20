@@ -3,6 +3,7 @@ layout: post
 title:  "使用CoreOS及Docker搭建简单的SaaS云平台"
 date:   2015-06-20
 categories: docker
+description: "本文讲述使用CoreOS及Docker搭建简单的SaaS云平台的完整经历"
 summary: "2014年是Docker大红大火的一年， DevOps这个新名词+新职位就如雨后春笋般冒出尖角，蓬勃发展起来。与时俱进，笔者带领一支三人团队利用了CoreOS及Docker搭建了一套SaaS平台，用以提供完整套装的SAP Business One的预览环境。
 
 本文会介绍此SaaS平台可以提供何种服务，其工作原理解析，以及最重要的，如何利用CoreOS搭建集群，如何利用Docker跑SAP Business One程序。本文面向开发，测试及DevOps同学。本文假设读者具有一定的容器基础，故行文不对Docker原理及使用作过多介绍。"

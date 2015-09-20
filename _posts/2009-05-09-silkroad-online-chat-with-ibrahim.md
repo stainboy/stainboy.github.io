@@ -3,6 +3,7 @@ layout: post
 title:  "丝路Online -- 与土耳其同事Ibrahim闲聊网络游戏"
 date:   2009-05-09
 categories: gaming
+description: "与微软土耳其同事Ibrahim闲聊网络游戏"
 summary: "出乎我意料之外，在一次吃饭中，从微软同事Ibrahim口中得知他平时的休闲方式竟然是网络游戏。于是乎，我们开始变的有共同语言了。远在他乡，和一个完全不会说中文的人聊网络游戏，真是一种奇特的境地。以下以对话形式放出且全部翻译成简体中文。"
 ---
 

@@ -3,6 +3,7 @@ layout: post
 title:  "N种方法使用C++调用C#.NET库"
 date:   2010-05-22
 categories: coding
+description: "本文描述使用C++调用C#/VB等托管代码，给出三种常规方法和一些变通方法以供参考"
 summary: "此文不描述何种场景下需要使用C++调用C#/VB等托管代码，而直接给出三种常规方法和一些变通方法以供参考"
 ---
 

@@ -3,6 +3,7 @@ layout: post
 title:  "超级楼梯问题 -- 再议Fibonacci数列"
 date:   2010-08-07
 categories: coding
+description: "今天讨论一个经典问题“超级楼梯”，这是一个数学问题，非常适合锻炼逻辑思维能力"
 summary: "今天讨论一个经典问题“超级楼梯”，这是一个数学问题，非常适合锻炼逻辑思维能力"
 ---
 

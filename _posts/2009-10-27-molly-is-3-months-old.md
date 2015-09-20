@@ -3,6 +3,7 @@ layout: post
 title:  "Molly三个半月大了"
 date:   2009-10-27
 categories: molly
+description: "Molly is 3 months old"
 summary: 
 ---
 

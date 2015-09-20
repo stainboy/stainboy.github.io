@@ -3,6 +3,7 @@ layout: post
 title:  "DLL Injection"
 date:   2007-06-22
 categories: coding
+description: "DLL injection via Microsoft Detours technology under Windows platform"
 summary: "First of all, let me talk about why I need to Dll injection. In recent days, I found a private server of Shininglore and downloaded it with my great curious since it’s the best and first online game that I never played before. But for some reason, the client binaries are wrapped and it force me to start a Login.exe to start game. And what really make me crazy is that when I’m playing the game, if the focus of game window lost, then the process of game will be terminated by Login.exe, which means, if I want to play game, I have to play game without doing anything else such as QQ, MSN, etc…"
 ---
 

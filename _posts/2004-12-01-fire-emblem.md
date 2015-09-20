@@ -3,6 +3,7 @@ layout: post
 title:  "Fire Emblem 2 (GAIDEN)"
 date:   2004-12-01
 categories: gaming
+description: "本文讲述了笔者的火焰纹章情结的由来以及自制火纹游戏的过程"
 summary: "本文讲述了笔者的火焰纹章情结的由来以及自制火纹游戏的过程。"
 ---
 
