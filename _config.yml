@@ -3,3 +3,6 @@ subtitle: Talk is cheap. Show me the code.
 author: Miles Chen
 markdown: redcarpet
 encoding: utf-8
+
+gems:
+  - jekyll-sitemap
