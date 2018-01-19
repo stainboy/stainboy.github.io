@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "使用CoreOS及Docker搭建简单的SaaS云平台"
 date:   2015-06-20
 categories: docker

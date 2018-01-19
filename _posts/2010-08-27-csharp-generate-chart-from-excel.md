@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "使用C#4.0操作Excel生成图表并导出到文件"
 date:   2010-08-27
 categories: coding

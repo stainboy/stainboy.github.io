@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "超级楼梯问题 -- 再议Fibonacci数列"
 date:   2010-08-07
 categories: coding

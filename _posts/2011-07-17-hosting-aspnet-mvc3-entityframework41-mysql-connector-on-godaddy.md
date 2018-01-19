@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "在Godaddy空间上部署ASP.NET MVC3 + EntityFramework4.1 + MySQL应用程序"
 date:   2011-07-17
 categories: coding

@@ -4,10 +4,13 @@ title: Miles Chen's Space powered by Github Pages
 ---
 <div id="home">
     {% for post in site.posts limit:10 %}
-        <div class="posts">
-            <a href="{{ site.baseurl }}{{ post.url }}"><h2>{{ post.title }}</h2></a>
-            <p class="meta">{{ post.date | date: "%B %d, %Y" }}</p>
-            <p class="summary">{{ post.summary }}</p>
-        </div>
+    <div class="posts">
+        <a href="{{ site.baseurl }}{{ post.url }}">
+            <h2>{{ post.title }}</h2>
+        </a>
+        <p class="meta">{{ post.date | date: "%B %d, %Y" }}</p>
+        <p class="summary">{{ post.summary }}</p>
+    </div>
     {% endfor %}
 </div>
+

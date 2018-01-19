@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "小工具开发笔记—IE自动填表器 -- 你好，世界"
 date:   2010-09-07
 categories: coding

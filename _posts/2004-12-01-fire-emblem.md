@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "Fire Emblem 2 (GAIDEN)"
 date:   2004-12-01
 categories: gaming

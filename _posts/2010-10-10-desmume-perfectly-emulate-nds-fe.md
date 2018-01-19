@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "NDS 火焰之纹章 新暗黑龙与光之剑（FC复刻版）DeSmuME 完美模拟"
 date:   2010-10-10
 categories: gaming

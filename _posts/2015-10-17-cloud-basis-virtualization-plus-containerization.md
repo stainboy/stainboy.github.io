@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "云平台的基石 -- 虚拟化加容器化"
 date:   2015-10-17
 categories: docker

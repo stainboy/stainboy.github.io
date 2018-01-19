@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "感慨一下，2001年的老游戏在win8上运行正常！"
 date:   2013-02-01
 categories: gaming

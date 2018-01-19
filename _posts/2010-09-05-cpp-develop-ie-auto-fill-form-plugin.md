@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "小工具开发笔记—IE自动填表器 -- 序"
 date:   2010-09-05
 categories: coding
@@ -56,7 +56,7 @@ summary: "此工具的开发契机是由于家人需要频繁使用招商银行�
 
 ![6009e63e]({{ site.BASE_PATH }}/assets/cloud/2010/6009e63e.jpg)
 
-此工具的开发契机是由于家人需要频繁使用招商银行在线支付系统—众所周知—招行在线支付使用了ActiveX控件，导致每次输入只能手写卡号密码（不能复制粘贴），而卡号比较长，容易输错，故久而久之就有了动手开发辅助工具来自动填表的念头。其实早在三年前，小生已经使用C#开发了一个[简洁版的只针对招行的自动填表工具](http://nport.codeplex.com/SourceControl/changeset/view/50211#604842)（WPF + UI Automation）。直到目前完成此工具，之前那款才光荣退休。其实在这次动手编码之前，是考量过市面上同类型产品的，比较出名的是[马桶智能填表](http://www.maxthon.cn/overview.htm)和[火狐自动填表](https://addons.mozilla.org/en-US/firefox/addon/4775/)。但是前者不支持ActiveX填写和验证码识别，后者索性没有ActiveX这种东东（招行只支持IE浏览器-_-|||）。所以最终还是自己动手，丰衣足食！
+此工具的开发契机是由于家人需要频繁使用招商银行在线支付系统—众所周知—招行在线支付使用了ActiveX控件，导致每次输入只能手写卡号密码（不能复制粘贴），而卡号比较长，容易输错，故久而久之就有了动手开发辅助工具来自动填表的念头。其实早在三年前，小生已经使用C#开发了一个[简洁版的只针对招行的自动填表工具](http://nport.codeplex.com/SourceControl/changeset/view/50211#604842)（WPF + UI Automation）。直到目前完成此工具，之前那款才光荣退休。其实在这次动手编码之前，是考量过市面上同类型产品的，比较出名的是[马桶智能填表](http://www.maxthon.cn/overview.htm)和[火狐自动填表](https://addons.mozilla.org/en-US/firefox/addon/4775/)。但是前者不支持ActiveX填写和验证码识别，后者索性没有ActiveX这种东东（招行只支持IE浏览器`-_-|||`）。所以最终还是自己动手，丰衣足食！
 
 在阅读后续开发内容之前，看官最好了解以下基础知识，这样才能更好的接受和理解本文。
 

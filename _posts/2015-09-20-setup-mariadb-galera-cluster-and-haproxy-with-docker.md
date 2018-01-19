@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "MariaDB Galera Cluster and HAProxy Setup with Docker"
 date:   2015-09-20
 categories: docker

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "编写爬虫程序的神器 - Groovy + Jsoup + Sublime"
 date:   2014-07-04
 categories: coding

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "小工具开发笔记—IE自动填表器 -- 执行JavaScript"
 date:   2013-03-10
 categories: coding

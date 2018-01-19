@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "小试Linux下C#桌面程序编程"
 date:   2010-08-25
 categories: coding

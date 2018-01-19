@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "丝路Online -- 与土耳其同事Ibrahim闲聊网络游戏"
 date:   2009-05-09
 categories: gaming

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "偏招去除迅雷5广告"
 date:   2009-10-27
 categories: coding

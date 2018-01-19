@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "Fanstastic Silverlight"
 date:   2008-12-23
 categories: coding

@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "为Windows关机功能设置一个快捷键"
 date:   2012-02-19
 categories: coding

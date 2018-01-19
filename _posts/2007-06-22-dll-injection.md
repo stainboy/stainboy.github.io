@@ -1,5 +1,5 @@
 ---
-layout: post
+
 title:  "DLL Injection"
 date:   2007-06-22
 categories: coding

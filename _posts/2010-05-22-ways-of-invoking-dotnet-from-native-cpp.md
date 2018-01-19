@@ -1,5 +1,4 @@
 ---
-layout: post
 title:  "N种方法使用C++调用C#.NET库"
 date:   2010-05-22
 categories: coding
