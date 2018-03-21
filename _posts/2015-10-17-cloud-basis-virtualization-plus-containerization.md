@@ -2,7 +2,7 @@
 
 title:  "云平台的基石 -- 虚拟化加容器化"
 date:   2015-10-17
-categories: docker
+categories: container
 description: "本文介绍云平台背后的虚拟化和容器化"
 summary: "云计算的时代已经全面来临。上至Office365，下至各种云笔记；外有亚马逊，内有阿里云；Iaas, PaaS, SaaS, BaaS, CaaS等一个个新名词不停的映入我们眼帘。
 那么在这个神奇的时代，这些神奇的“云端应用”倒底是怎么构建起来的。且让我娓娓道来。"

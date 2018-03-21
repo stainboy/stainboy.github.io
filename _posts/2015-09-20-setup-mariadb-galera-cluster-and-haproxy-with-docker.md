@@ -2,7 +2,7 @@
 
 title:  "MariaDB Galera Cluster and HAProxy Setup with Docker"
 date:   2015-09-20
-categories: docker
+categories: container
 description: "This article shows how to setup mariadb galera cluster and haproxy with docker"
 summary: "This article shows how to setup mariadb galera cluster and haproxy with docker"
 ---

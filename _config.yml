@@ -7,5 +7,5 @@ title: Miles Space
 description: Talk is cheap. Show me the code.
 google_analytics: UA-11765858-7
 
-gems:
+plugins:
 - jekyll-sitemap

@@ -1,0 +1,123 @@
+---
+title:  "原生云容器设计白皮书"
+date:   2018-03-19
+categories: container
+description: "本文翻译自红帽 https://www.redhat.com/en/resources/cloud-native-container-design-whitepaper"
+summary: "为了使容器化的应用程序能更好的成为原生云的标准公民，有一些设计原则是需要遵守的。遵循这些设计原则可以使你的应用被更多原生云平台（例如Kubernetes）所接受，并且可以更高效的予以自动化。"
+---
+
+*本文翻译自红帽 https://www.redhat.com/en/resources/cloud-native-container-design-whitepaper*
+
+### 内容摘要
+“原生云”是一个术语，用于描述专门为在云端运行而设计的应用程序。通常，原生云应用被设计成松耦合的微服务，并且运行在容器里，由云平台来管理。这些应用程序天然具备容错性，即使当底层的基础设施出现不可用时，它们仍然可以可靠的运行并且扩展自身规模。为了得到这样的能力，原生云平台会针对运行在上面的应用程序“强加”一些条款和约束。这些条款确保了应用程序遵循某些规范，并且允许云平台自动化管理容器化的应用程序。
+
+许多组织意识到设计原生云应用程序的必要性和重要性，但是确无从着手。确保有一套原生云平台，以及运行在上面的容器化应用程序之间的无缝运行，可以带来超强的容错性，即使当底层的基础设施出现不可用时，它们仍然可以可靠的运行并且扩展自身规模。这本白皮书描述了容器设计的一些原则，只有遵循这些原则，应用程序才能成为原生云的良好公民。遵循这些设计原则可以使你的应用程序在各种原生云平台（例如Kubernetes）被自动化管理。
+
+### 软件设计原则
+原则存在于生活的许多领域，它们通常代表一个可以被其他人从中获取的基本的真理或信仰。在软件中，原则是相当抽象的准则，这些准则应该在设计软件时要遵循。 它们可以应于任何编程语言，采用不同的模式实现，并且实现了以下不同的做法。
+
+通常情况下，模式和实践是用来实现设计原则结果的工具。编写高质量软件的设计原则总是出自一些核心原则。 这些原则包括：
+- `KISS` -- Keep it simple, stupid. 简单就是美。
+- `DRY` -- Don’t repeat yourself. 别做重复劳动。
+- `YAGNI` -- You aren’t gonna need it. 别过渡设计（直到需要这个功能时才写代码）
+- `SoC` -- Separation of concerns. 分离关注点。
+
+即使这些原则并没有给出具体规范，他们也代表了一种语言和共同智慧，并且被许多开发人员理解并经常提及。
+
+除此之外，还有由Robert C. Martin引入的SOLID原则（单一职责、开必原则、里氏替换，接口隔离，依赖倒置）。这些原则为编写更好的面向对象软件提供了指导思想。它是一个由互补原则组成的框架。这个框架也许会有不同的解读，但仍然作为面向对象设计的坚实基础。SOLID原则带给人们的期望是，只要用了，便可以创建一个具有更高质量的系统，并且从长期来看代码更易于维护。
+
+SOLID原则使用面向对象的原语和概念（如`类`、`接口`和`继承`）来诠释面向对象设计。同样，针对云原生应用程序设计的原则，其主原语是`容器境像`而不是`类`。遵循这些原则，我们就有可能创造出更适合于原生云平台（如Kubernetes）的容器化应用。
+
+### 红帽是如何设计原生云容器的？
+如今，我们几乎可以将任何应用程序放入容器并运行它。 但是，要创建一个可以通过原生云平台（如Kubernetes）自动化管理和高效编排的容器化应用程序则需要付出更多的努力。
+
+下面的想法受到许多其他作品的启发，如“应用程序的十二要素（[The Twelve-Factor App](https://12factor.net/)）”，它的范围很广，从源代码管理到应用程序可伸缩性模型。 但是，以下讨论的原则的范围将会限制在如何设计基于容器的微服务化的应用程序，并且能够被诸如Kubernetes等原生云平台所管理。
+
+下面列出的创建容器化应用程序的设计原则使用`容器境像`作为基本原语，并使用`容器编排平台`作为目标容器运行时环境。 遵循这些原则将确保所产生的容器在大多数容器编排引擎中表现得像一个优秀的原生云公民，从而能够以自动化的方式调度，伸缩和监控它们。 以下原则重要性排名不分先后。
+
+#### SINGLE CONCERN PRINCIPLE (SCP)
+In many ways, this principle is similar to the single responsibility principle (SRP) from SOLID, which advises that a class should have only one responsibility. The motivation behind the SRP is that each responsibility is an axis of change and a class should have one — and only one — reason to change. The word “concern” in the SCP principle highlights concern as a higher level of abstraction than responsibility, and it better describes the scope as a container as opposed to a class. While the main motivation for SRP is to have a single reason for a change, the main motivation for SCP is container image reuse and replaceability. If you create a container that addresses a single concern, and it does it in a feature-complete way, the chances are higher of container image reuse in different application contexts.
+
+Thus, the SCP principle dictates that every container should address a single concern and do it well.
+Achieving it is easier than achieving SRP in the object-oriented world, as containers usually manage
+a single process, and most of the time that single process addresses a single concern.
+
+![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-20-42.png)
+
+If your containerized microservice needs to address multiple concerns, it can use patterns such as sidecar and init-containers to combine multiple containers into a single deployment unit (pod), where each container still handles a single concern. Similarly, you can swap containers that address the same concern. For example, replace the web server container, or a queue implementation container, with a newer and more scalable one.
+
+#### HIGH OBSERVABILITY PRINCIPLE (HOP)
+Containers provide a unified way for packaging and running applications by treating them like a black box. But any container aiming to become a cloud-native citizen must provide application programming interfaces (APIs) for the runtime environment to observe the container health and act accordingly. This is a fundamental prerequisite for automating container updates and life cycles in a unified way, which in turn improves the system’s resilience and user experience.
+
+![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-28-32.png)
+
+In practical terms, at a very minimum, your containerized application must provide APIs for the different kinds of health checks—liveness and readiness. Even better-behaving applications must provide other means to observe the state of the containerized application. The application should log important events into the standard error (STDERR) and standard output (STDOUT) for log aggregation by tools such as Fluentd and Logstash and integrate with tracing and metrics-gathering librar-
+ies such as OpenTracing, Prometheus, and others.
+
+Treat your application as a black box, but implement all necessary APIs to help the platform observe and manage your application in the best way possible.
+
+#### LIFE-CYCLE CONFORMANCE PRINCIPLE (LCP)
+The HOP dictates that your container provide APIs for the platform to read from. The LCP dictates that your application have a way to read the events coming from the platform. Moreover, apart from getting events, the container should conform and react to those events. This is where the name of the principle comes from. It is almost like having “write API” in your application to interact with the platform.
+
+![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-30-00.png)
+
+There are all kind of events coming from the managing platform that are intended to help you manage the life cycle of your container. It is up to your application to decide which events to handle and whether to react to those events or not.
+
+But some events are more important than others. For example, any application that requires a clean shutdown process needs to catch signal: terminate (SIGTERM) messages and shut down as quickly as possible. This is to avoid the forceful shutdown through a signal: kill (SIGKILL) that follows a SIGTERM.
+
+There are also other events, such as PostStart and PreStop, that might be significant to your application life-cycle management. For example, some applications need to warm up before service requests and some need to release resources before shutting down cleanly.
+
+#### IMAGE IMMUTABILITY PRINCIPLE (IIP)
+Containerized applications are meant to be immutable, and once built are not expected to change between different environments. This implies the use of an external means of storing the runtime data and relying on externalized configurations that vary across environments, rather than creating or modifying containers per environment. Any change in the containerized application should result in building a new container image and reusing it across all environments. The same principle is also popular under the name of immutable server/infrastructure and used for server/host management, too.
+
+![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-31-43.png)
+
+Following the IIP principle should prevent the creation of similar container images for different environments, but stick to one container image configured for each environment. This principle allows practices such as automatic roll-back and roll-forward during application updates, which is an important aspect of cloud-native automation.
+
+#### PROCESS DISPOSABILITY PRINCIPLE (PDP)
+One of the primary motivations for moving to containerized applications is that containers need to be as ephemeral as possible and ready to be replaced by another container instance at any point in time. There are many reasons to replace a container, such as failing a health check, scaling down the application, migrating the containers to a different host, platform resource starvation, or another issue.
+
+![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-32-52.png)
+
+This means that containerized applications must keep their state externalized or distributed and redundant. It also means the application should be quick in starting up and shutting down, and even be ready for a sudden, complete hardware failure.
+
+Another helpful practice in implementing this principle is to create small containers. Containers in cloud-native environments may be automatically scheduled and started on different hosts. Having smaller containers leads to quicker start-up times because before being restarted, containers need to be physically copied to the host system.
+
+#### SELF-CONTAINMENT PRINCIPLE (S-CP)
+This principle dictates that a container should contain everything it needs at build time. The container should rely only on the presence of the Linux ® kernel and have any additional libraries added into it at the time the container is built. In addition to the libraries, it should also contain things such as the language runtime, the application platform if required, and other dependencies needed to run the containerized application.
+
+![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-34-04.png)
+
+The only exceptions are things such as configurations, which vary between different environments and must be provided at runtime; for example, through Kubernetes ConfigMap.
+
+Some applications are composed of multiple containerized components. For example, a containerized web application may also require a database container. This principle does not suggest merging both containers. Instead, it suggests that the database container contain everything needed to run the database, and the web application container contain everything needed to run the web application, such as the web server. At runtime, the web application container will depend on and access the database container as needed.
+
+#### RUNTIME CONFINEMENT PRINCIPLE (RCP)
+S-CP looks at the containers from a build-time perspective and the resulting binary with its content. But a container is not just a single-dimensional black box of one size on the disk. Containers have multiple dimensions at runtime, such as memory usage dimension, CPU usage dimension, and other resource consumption dimensions.
+
+![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-35-20.png)
+
+This RCP principle suggests that every container declare its resource requirements and pass that information to the platform. It should share the resource profile of a container in terms of CPU, memory, networking, disk influence on how the platform performs scheduling, auto-scaling, capacity management, and the general service-level agreements (SLAs) of the container.
+
+In addition to passing the resource requirements of the container, it is also important that the application stay confined to the indicated resource requirements. If the application stays confined, the platform is less likely to consider it for termination and migration when resource starvation occurs.
+
+### CONCLUSION
+Cloud native is more than an end state — it is a way of working. This whitepaper described a number of principles that represent foundational guidelines that containerized applications must comply with in order to be good cloud-native citizens.
+
+In addition to those principles, creating good containerized applications requires familiarity with other container-related best practices and techniques. While the principles described above are more fundamental and apply to most use cases, the best practices listed below require judgment on when to apply or not apply. Here are some of the more common container-related best practices:
+
+- **Aim for small images**. Create smaller images by cleaning up temporary files and avoiding the installation of unnecessary packages. This reduces container size, build time, and networking time when copying container images.
+- **Support arbitrary user IDs**. Avoid using the sudo command or requiring a specific userid to run your container.
+- **Mark important ports**. While it is possible to specify port numbers at runtime, specifying them using the EXPOSE command makes it easier for both humans and software to use your image.
+- **Use volumes for persistent data**. The data that needs to be preserved after a container is destroyed must be written to a volume.
+- **Set image metadata**. Image metadata in the form of tags, labels, and annotations makes your container images more usable, resulting in a better experience for developers using your images.
+- **Synchronize host and image**. Some containerized applications require the container to be synchronized with the host on certain attributes such as time and machine ID.
+
+Here are links to resources with patterns and best practices to help you implement the above-listed principles more effectively:
+- https://www.slideshare.net/luebken/container-patterns
+- https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices
+- http://docs.projectatomic.io/container-best-practices
+- https://docs.openshift.com/enterprise/3.0/creating_images/guidelines.html
+- https://www.usenix.org/system/files/conference/hotcloud16/hotcloud16_burns.pdf
+- https://leanpub.com/k8spatterns/
+- https://12factor.net/

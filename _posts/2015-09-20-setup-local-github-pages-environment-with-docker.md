@@ -2,7 +2,7 @@
 
 title:  "使用Docker搭建本地GitHub Pages开发环境"
 date:   2015-09-20
-categories: docker
+categories: container
 description: "本文逐步讲述如何使用Docker搭建本地GitHub Pages开发环境以便更加高效的编写博文"
 summary: "pchou写过一个系列来讲述如何一步一步在GitHub Pages上面搭建自己专属的博客。本文作为一个补充，给出一种使用Docker搭建本地的GitHub Pages开发环境的方法，以便各位博主更加高效的编写博文。"
 ---
