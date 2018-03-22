@@ -35,8 +35,10 @@ SOLID原则使用面向对象的原语和概念（如`类`、`接口`和`继承`
 
 下面列出的创建容器化应用程序的设计原则使用`容器境像`作为基本原语，并使用`容器编排平台`作为目标容器运行时环境。 遵循这些原则将确保所产生的容器在大多数容器编排引擎中表现得像一个优秀的原生云公民，从而能够以自动化的方式调度，伸缩和监控它们。 以下原则重要性排名不分先后。
 
-#### SINGLE CONCERN PRINCIPLE (SCP)
+#### 单一关注原则 SINGLE CONCERN PRINCIPLE (SCP)
 In many ways, this principle is similar to the single responsibility principle (SRP) from SOLID, which advises that a class should have only one responsibility. The motivation behind the SRP is that each responsibility is an axis of change and a class should have one — and only one — reason to change. The word “concern” in the SCP principle highlights concern as a higher level of abstraction than responsibility, and it better describes the scope as a container as opposed to a class. While the main motivation for SRP is to have a single reason for a change, the main motivation for SCP is container image reuse and replaceability. If you create a container that addresses a single concern, and it does it in a feature-complete way, the chances are higher of container image reuse in different application contexts.
+
+在许多方面，这一原则与SOLID的单一职责原则（SRP）相似，后者建议一个`类`应该只有一个职责。 SRP背后的动机是每个职责都是一个变化的枢纽，一个`类`应该有且只有一个理由去变更它。 SCP原则中的“关注”一词突出了关注点，认为这是一种比职责更高层次的抽象，它更好地将范围描述为一个`容器`而不是一个`类`。 虽然SRP的主要动机是有一个单一的变化原因，SCP的主要动机是`容器镜像`的重用和可替换性。 如果您创建一个只解决单个问题的容器，并且以功能完整的方式执行该容器，则在不同的应用程序上下文中重用容器镜像的可能性会更高。
 
 Thus, the SCP principle dictates that every container should address a single concern and do it well.
 Achieving it is easier than achieving SRP in the object-oriented world, as containers usually manage
