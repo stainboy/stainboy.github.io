@@ -36,27 +36,22 @@ SOLID原则使用面向对象的原语和概念（如`类`、`接口`和`继承`
 下面列出的创建容器化应用程序的设计原则使用`容器境像`作为基本原语，并使用`容器编排平台`作为目标容器运行时环境。 遵循这些原则将确保所产生的容器在大多数容器编排引擎中表现得像一个优秀的原生云公民，从而能够以自动化的方式调度，伸缩和监控它们。 以下原则重要性排名不分先后。
 
 #### 单一关注原则 SINGLE CONCERN PRINCIPLE (SCP)
-In many ways, this principle is similar to the single responsibility principle (SRP) from SOLID, which advises that a class should have only one responsibility. The motivation behind the SRP is that each responsibility is an axis of change and a class should have one — and only one — reason to change. The word “concern” in the SCP principle highlights concern as a higher level of abstraction than responsibility, and it better describes the scope as a container as opposed to a class. While the main motivation for SRP is to have a single reason for a change, the main motivation for SCP is container image reuse and replaceability. If you create a container that addresses a single concern, and it does it in a feature-complete way, the chances are higher of container image reuse in different application contexts.
+在许多方面，这一原则与SOLID的单一职责原则（SRP）相似，后者建议一个`类`应该只有一个职责。 SRP背后的动机是每个职责都是一个变化的枢纽，一个`类`应该有且只有一个理由去变更它。 SCP原则中的“关注”一词突出了关注点，认为这是一种比职责更高层次的抽象，它更好地将范围描述为一个`容器`而不是一个`类`。 虽然SRP的主要动机是有一个单一的变化原因，SCP的主要动机是`容器镜像`的重用和可替换性。 如果你创建一个只解决单个问题的容器，并且使其功能完整化，则在不同的应用程序上下文中重用容器镜像的可能性会更高。
 
-在许多方面，这一原则与SOLID的单一职责原则（SRP）相似，后者建议一个`类`应该只有一个职责。 SRP背后的动机是每个职责都是一个变化的枢纽，一个`类`应该有且只有一个理由去变更它。 SCP原则中的“关注”一词突出了关注点，认为这是一种比职责更高层次的抽象，它更好地将范围描述为一个`容器`而不是一个`类`。 虽然SRP的主要动机是有一个单一的变化原因，SCP的主要动机是`容器镜像`的重用和可替换性。 如果您创建一个只解决单个问题的容器，并且以功能完整的方式执行该容器，则在不同的应用程序上下文中重用容器镜像的可能性会更高。
-
-Thus, the SCP principle dictates that every container should address a single concern and do it well.
-Achieving it is easier than achieving SRP in the object-oriented world, as containers usually manage
-a single process, and most of the time that single process addresses a single concern.
+因此，SCP原则规定每个容器都应该解决一个问题并做将它做到最好。 实现它比在面向对象的世界中实现SRP更容易，因为容器通常管理单个进程，并且大部分时间这个进程只处理单个问题。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-20-42.png)
 
-If your containerized microservice needs to address multiple concerns, it can use patterns such as sidecar and init-containers to combine multiple containers into a single deployment unit (pod), where each container still handles a single concern. Similarly, you can swap containers that address the same concern. For example, replace the web server container, or a queue implementation container, with a newer and more scalable one.
+如果你的容器化微服务需要解决多个问题，那么请考虑使用诸如[sidecar](http://blog.kubernetes.io/2015/06/the-distributed-system-toolkit-patterns.html)和[init-containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers/)的模式将多个容器合并成一个单独的部署单元（[pod](https://kubernetes.io/docs/concepts/workloads/pods/pod-overview/)），其中每个容器仍然处理单个问题。如此，你便可以替换解决相同问题的容器。 例如，将Web服务器容器或队列实现容器替换为更新且更具可扩展性的容器。
 
-#### HIGH OBSERVABILITY PRINCIPLE (HOP)
-Containers provide a unified way for packaging and running applications by treating them like a black box. But any container aiming to become a cloud-native citizen must provide application programming interfaces (APIs) for the runtime environment to observe the container health and act accordingly. This is a fundamental prerequisite for automating container updates and life cycles in a unified way, which in turn improves the system’s resilience and user experience.
+#### 高可观测性原则 HIGH OBSERVABILITY PRINCIPLE (HOP)
+容器提供统一的打包和运行应用程序的方式，然而这种方式对待其内部却像黑匣子一样。 但任何旨在成为原生云公民的容器都必须为运行时环境提供相应的应用程序编程接口（API），以观察容器的健康状况及行为。 这是以统一的方式来自动化管理容器生命周期的基本先决条件，从而提高了系统的弹性和用户体验。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-28-32.png)
 
-In practical terms, at a very minimum, your containerized application must provide APIs for the different kinds of health checks—liveness and readiness. Even better-behaving applications must provide other means to observe the state of the containerized application. The application should log important events into the standard error (STDERR) and standard output (STDOUT) for log aggregation by tools such as Fluentd and Logstash and integrate with tracing and metrics-gathering librar-
-ies such as OpenTracing, Prometheus, and others.
+在实践中，容器化应用程序至少需要提供两种健康检查API -- [liveness和readiness](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)。 即使是非常健康的应用程序也应该提供一些方法来观察容器化应用程序的状态。 应用程序应将重要事件记录到标准错误（STDERR）和标准输出（STDOUT）中，以便通过诸如`Fluentd`和`Logstash`等工具进行日志聚合，并与`跟踪`和`指标收集`类库（如OpenTracing，Prometheus等）进行集成。
 
-Treat your application as a black box, but implement all necessary APIs to help the platform observe and manage your application in the best way possible.
+把应用程序视为黑盒子，但实现所有必要的API以帮助云平台以最佳方式观察和管理你的应用程序。
 
 #### LIFE-CYCLE CONFORMANCE PRINCIPLE (LCP)
 The HOP dictates that your container provide APIs for the platform to read from. The LCP dictates that your application have a way to read the events coming from the platform. Moreover, apart from getting events, the container should conform and react to those events. This is where the name of the principle comes from. It is almost like having “write API” in your application to interact with the platform.
