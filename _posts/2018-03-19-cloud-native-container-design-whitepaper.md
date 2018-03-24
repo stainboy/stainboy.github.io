@@ -53,23 +53,23 @@ SOLID原则使用面向对象的原语和概念（如`类`、`接口`和`继承`
 
 把应用程序视为黑盒子，但实现所有必要的API以帮助云平台以最佳方式观察和管理你的应用程序。
 
-#### LIFE-CYCLE CONFORMANCE PRINCIPLE (LCP)
-The HOP dictates that your container provide APIs for the platform to read from. The LCP dictates that your application have a way to read the events coming from the platform. Moreover, apart from getting events, the container should conform and react to those events. This is where the name of the principle comes from. It is almost like having “write API” in your application to interact with the platform.
+#### 生命周期合规原则 LIFE-CYCLE CONFORMANCE PRINCIPLE (LCP)
+HOP规定容器提供API供云平台消费。LCP规定应用程序获取来自云平台的事件。而且，除了获得事件之外，容器应该遵循规定对这些事件作出反应。这正是本原则的名称由来。这就好比在应用程序中使用“写API”来与平台进行交互。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-30-00.png)
 
-There are all kind of events coming from the managing platform that are intended to help you manage the life cycle of your container. It is up to your application to decide which events to handle and whether to react to those events or not.
+来自管理平台的所有事件都旨在帮助你管理容器的生命周期。决定处理哪些事件以及是否对这些事件做出反应完全取决于你的应用程序。
 
-But some events are more important than others. For example, any application that requires a clean shutdown process needs to catch signal: terminate (SIGTERM) messages and shut down as quickly as possible. This is to avoid the forceful shutdown through a signal: kill (SIGKILL) that follows a SIGTERM.
+但有些事件尤为重要。例如，任何需要干净关闭进程的应用程序都需要捕获信号：`终止`（`SIGTERM`）消息并尽快关闭它。这是为了避免被另一个信号强制关闭：`杀死`（`SIGKILL`），它一般出现在`终止`信号之后。
 
-There are also other events, such as PostStart and PreStop, that might be significant to your application life-cycle management. For example, some applications need to warm up before service requests and some need to release resources before shutting down cleanly.
+还有一些其他事件，例如`启动后`(PostStart)和`停止前`(PreStop)，可能对你的应用程序生命周期管理很重要。例如，有些应用程序需要在服务请求之前进行预热，有些需要在关闭之前释放资源。
 
-#### IMAGE IMMUTABILITY PRINCIPLE (IIP)
-Containerized applications are meant to be immutable, and once built are not expected to change between different environments. This implies the use of an external means of storing the runtime data and relying on externalized configurations that vary across environments, rather than creating or modifying containers per environment. Any change in the containerized application should result in building a new container image and reusing it across all environments. The same principle is also popular under the name of immutable server/infrastructure and used for server/host management, too.
+#### 镜像不可变原则 IMAGE IMMUTABILITY PRINCIPLE (IIP)
+容器化应用程序生来是不可改变的，一旦构建完成，它将不会在不同的运行环境之间发生改变。这意味着必须使用外部手段来存储运行时数据，并依赖于随运行环境而变化的外部配置，而不是在每个运行环境中创建或修改容器。容器化应用程序的任何变更应该导致重新构建容器镜像并在所有环境中重用它。同样出名的原则还有`服务器不可变`/`基础架构不可变`，它们被用于服务器及主机管理。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-31-43.png)
 
-Following the IIP principle should prevent the creation of similar container images for different environments, but stick to one container image configured for each environment. This principle allows practices such as automatic roll-back and roll-forward during application updates, which is an important aspect of cloud-native automation.
+遵循IIP原则应禁止为不同运行环境创建类似的容器镜像，而是在每个运行环境中使用同一个容器镜像。此原则允许在应用程序更新期间实现自动回滚和前滚等操作，这是原生云自动化管理的一个重要方面。
 
 #### PROCESS DISPOSABILITY PRINCIPLE (PDP)
 One of the primary motivations for moving to containerized applications is that containers need to be as ephemeral as possible and ready to be replaced by another container instance at any point in time. There are many reasons to replace a container, such as failing a health check, scaling down the application, migrating the containers to a different host, platform resource starvation, or another issue.
