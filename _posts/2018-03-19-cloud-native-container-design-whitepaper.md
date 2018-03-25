@@ -19,7 +19,7 @@ summary: "为了使容器化的应用程序能更好的成为原生云的标准�
 通常情况下，模式和实践是用来实现设计原则结果的工具。编写高质量软件的设计原则总是出自一些核心原则。 这些原则包括：
 - `KISS` -- Keep it simple, stupid. 简单就是美。
 - `DRY` -- Don’t repeat yourself. 别做重复劳动。
-- `YAGNI` -- You aren’t gonna need it. 别过渡设计（直到需要这个功能时才写代码）
+- `YAGNI` -- You aren’t gonna need it. 别过度设计（直到需要这个功能时才写代码）
 - `SoC` -- Separation of concerns. 分离关注点。
 
 即使这些原则并没有给出具体规范，他们也代表了一种语言和共同智慧，并且被许多开发人员理解并经常提及。
@@ -53,7 +53,7 @@ SOLID原则使用面向对象的原语和概念（如`类`、`接口`和`继承`
 
 把应用程序视为黑盒子，但实现所有必要的API以帮助云平台以最佳方式观察和管理你的应用程序。
 
-#### 生命周期合规原则 LIFE-CYCLE CONFORMANCE PRINCIPLE (LCP)
+#### 生命周期一致性原则 LIFE-CYCLE CONFORMANCE PRINCIPLE (LCP)
 HOP规定容器提供API供云平台消费。LCP规定应用程序获取来自云平台的事件。而且，除了获得事件之外，容器应该遵循规定对这些事件作出反应。这正是本原则的名称由来。这就好比在应用程序中使用“写API”来与平台进行交互。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-30-00.png)
@@ -71,46 +71,46 @@ HOP规定容器提供API供云平台消费。LCP规定应用程序获取来自�
 
 遵循IIP原则应禁止为不同运行环境创建类似的容器镜像，而是在每个运行环境中使用同一个容器镜像。此原则允许在应用程序更新期间实现自动回滚和前滚等操作，这是原生云自动化管理的一个重要方面。
 
-#### PROCESS DISPOSABILITY PRINCIPLE (PDP)
-One of the primary motivations for moving to containerized applications is that containers need to be as ephemeral as possible and ready to be replaced by another container instance at any point in time. There are many reasons to replace a container, such as failing a health check, scaling down the application, migrating the containers to a different host, platform resource starvation, or another issue.
+#### 一次性进程原则 PROCESS DISPOSABILITY PRINCIPLE (PDP)
+迁移到容器化应用程序的主要动机之一是容器生命需要尽可能短暂，并随时可以由其他容器实例替换。有很多原因需要替换容器，比如健康检查失败，缩小应用程序规模，将容器迁移到不同的主机，平台资源不足或其他问题。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-32-52.png)
 
-This means that containerized applications must keep their state externalized or distributed and redundant. It also means the application should be quick in starting up and shutting down, and even be ready for a sudden, complete hardware failure.
+这意味着容器化应用程序必须将其状态保存在外部或者使用分布式冗余。这也意味着应用程序应该能够快速启动和关闭，甚至要为突发的全面硬件故障做好准备。
 
-Another helpful practice in implementing this principle is to create small containers. Containers in cloud-native environments may be automatically scheduled and started on different hosts. Having smaller containers leads to quicker start-up times because before being restarted, containers need to be physically copied to the host system.
+实现这一原则的一个有效的做法是创建多个小型容器。原生云环境中的容器可以被自动调度在不同的主机上启动。拥有较小的容器可以缩短启动时间，因为在重新启动之前，容器镜像需要被复制到宿主机上面。
 
-#### SELF-CONTAINMENT PRINCIPLE (S-CP)
-This principle dictates that a container should contain everything it needs at build time. The container should rely only on the presence of the Linux ® kernel and have any additional libraries added into it at the time the container is built. In addition to the libraries, it should also contain things such as the language runtime, the application platform if required, and other dependencies needed to run the containerized application.
+#### 自完备原则 SELF-CONTAINMENT PRINCIPLE (S-CP)
+这个原则规定容器在构建时应该包含需要的所有东西。容器在运行时应该仅依赖于Linux内核的存在，而在构建容器时添加任何其他库。除了库之外，它还应该包含诸如语言运行库，应用程序平台（如果需要）以及运行容器化应用程序所需的其他依赖项等内容。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-34-04.png)
 
-The only exceptions are things such as configurations, which vary between different environments and must be provided at runtime; for example, through Kubernetes ConfigMap.
+唯一的例外是配置项，这些配置在不同的环境中有所不同，必须在运行时提供; 例如，通过[Kubernetes ConfigMap](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/)。
 
-Some applications are composed of multiple containerized components. For example, a containerized web application may also require a database container. This principle does not suggest merging both containers. Instead, it suggests that the database container contain everything needed to run the database, and the web application container contain everything needed to run the web application, such as the web server. At runtime, the web application container will depend on and access the database container as needed.
+某些应用程序由多个容器组件组成。例如，一个容器化的Web应用程序也可能需要一个数据库容器。这个原则并不建议合并这两个容器。相反，它建议数据库容器包含运行数据库所需的所有内容，并且Web应用程序容器包含运行Web应用程序所需的所有内容，例如Web服务器。在运行时，Web应用程序容器将根据需要依赖并访问数据库容器。
 
-#### RUNTIME CONFINEMENT PRINCIPLE (RCP)
-S-CP looks at the containers from a build-time perspective and the resulting binary with its content. But a container is not just a single-dimensional black box of one size on the disk. Containers have multiple dimensions at runtime, such as memory usage dimension, CPU usage dimension, and other resource consumption dimensions.
+#### 运行时约束原则 RUNTIME CONFINEMENT PRINCIPLE (RCP)
+S-CP看重的是容器的构建时角度以及生成的二进制文件。但是容器不仅仅是磁盘上一个单一维度的黑盒子。容器在运行时具有多个维度，例如内存使用维度，CPU使用维度和其他资源消耗维度。
 
 ![367f634a]({{ site.BASE_PATH }}/assets/cloud/2018/2018-03-21_21-35-20.png)
 
-This RCP principle suggests that every container declare its resource requirements and pass that information to the platform. It should share the resource profile of a container in terms of CPU, memory, networking, disk influence on how the platform performs scheduling, auto-scaling, capacity management, and the general service-level agreements (SLAs) of the container.
+该RCP原则表明，每个容器都会声明其资源需求并将该信息传递给平台。它应该根据CPU，内存，网络，磁盘对平台如何执行调度，自动扩展，容量管理以及容器的通用服务级别协议（SLA）的影响来共享整个容器资源池。
 
-In addition to passing the resource requirements of the container, it is also important that the application stay confined to the indicated resource requirements. If the application stays confined, the platform is less likely to consider it for termination and migration when resource starvation occurs.
+除了传递容器的资源需求之外，应用程序限制在指定的资源需求之内也很重要。如果应用程序保持受限状态，那么当发生资源匮乏时，平台不太可能将其终止和迁移。
 
-### CONCLUSION
-Cloud native is more than an end state — it is a way of working. This whitepaper described a number of principles that represent foundational guidelines that containerized applications must comply with in order to be good cloud-native citizens.
+### 总结
+原生云本身远没有达到最终状态 --- 它正在在不断完善当中。本白皮书描述了许多原则，这些原则代表了容器化应用程序为成为优秀的原生云公民而必须遵守的基本准则。
 
-In addition to those principles, creating good containerized applications requires familiarity with other container-related best practices and techniques. While the principles described above are more fundamental and apply to most use cases, the best practices listed below require judgment on when to apply or not apply. Here are some of the more common container-related best practices:
+除了这些原则之外，创建良好的容器化应用程序还需要熟悉其他与容器相关的最佳实践和技术。前文提到的设计原则更为基础，适用于大多数使用案例，而下面列出的最佳实践需要判断何时适用或不适用。以下是一些更常见的与容器相关的最佳实践：
 
-- **Aim for small images**. Create smaller images by cleaning up temporary files and avoiding the installation of unnecessary packages. This reduces container size, build time, and networking time when copying container images.
-- **Support arbitrary user IDs**. Avoid using the sudo command or requiring a specific userid to run your container.
-- **Mark important ports**. While it is possible to specify port numbers at runtime, specifying them using the EXPOSE command makes it easier for both humans and software to use your image.
-- **Use volumes for persistent data**. The data that needs to be preserved after a container is destroyed must be written to a volume.
-- **Set image metadata**. Image metadata in the form of tags, labels, and annotations makes your container images more usable, resulting in a better experience for developers using your images.
-- **Synchronize host and image**. Some containerized applications require the container to be synchronized with the host on certain attributes such as time and machine ID.
+- **更小的容器镜像** 通过清理临时文件并避免安装不必要的软件包来创建体积较小的镜像。这减少了构建时以及运行时复制容器镜像的时间。
+- **支持任意用户身份** 避免使用`sudo`命令或要求特定用户身份来运行容器。*（译者注：因为这会使得容器可用性变的糟糕）*
+- **标识重要的端口** 虽然可以在运行时指定端口号，但（在`Dockerfile`中）使用`EXPOSE`命令指定端口号可以帮助开发人员和软件更容易地使用镜像。
+- **使用`卷`作为持久层** 容器销毁后仍需保留的数据必须写入`卷`（Volume）。
+- **使用镜像元数据** 标签（tag/label）和注解（annotations）等镜像元数据使容器可用性更高，从而为使用镜像的开发人员提供更好的体验。
+- **同步宿主机和容器** 一些容器化应用程序要求容器与宿主机的某些属性同步，比如时间和机器ID。*（译者注：这并不是一个很好的做法，因为降低了容器的可用性）*
 
-Here are links to resources with patterns and best practices to help you implement the above-listed principles more effectively:
+以下资源链接包含模式和最佳实践，可帮助您更有效地实现上述原则：
 - https://www.slideshare.net/luebken/container-patterns
 - https://docs.docker.com/engine/userguide/eng-image/dockerfile_best-practices
 - http://docs.projectatomic.io/container-best-practices
