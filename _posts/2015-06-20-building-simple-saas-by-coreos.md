@@ -15,7 +15,7 @@ summary: "2014年是Docker大红大火的一年， DevOps这个新名词+新职�
 
 **本文会介绍此SaaS平台可以提供何种服务，其工作原理解析，以及最重要的，如何利用CoreOS搭建集群，如何利用Docker跑SAP Business One程序。本文面向开发，测试及DevOps同学。本文假设读者具有一定的容器基础，故行文不对Docker原理及使用作过多介绍。**
 
-###为什么要这样做！###
+### 为什么要这样做！
 业界有这样一种说法，SAP的ERP套件是世界上最好的ERP解决方案，也是最难部署最难使用的计算机软件！诚然，大型企业上一套SAP Business Suit套件（俗称R3）可能得数月的部署周期，即使是SAP Business One这种针对中小型企业的解决方案也需要好几天的安装部署加调试。
 
 再说一下团队内部开发测试流程是如何开展的：测试工程师小何早上来到公司，从指定的build server上面拷贝一张最新版本(nightly build)的ISO，然后SSH以及RDP分别远程连接一台SUSE Linux测试机和一台Windows测试机，把ISO文件上传到两台服务器并且进行安装。（SAP Business One分成Server和Client两部分，Server得安装在SUSE Linux上面，Client安装在Windows上面）。此处略过安装过程500字。。。下午两点，小何长叹一口气，终于装好了，今天运气真好，整个安装很顺利，全部一次通过，现在可以开始做回归测试了，耶！
@@ -24,7 +24,7 @@ summary: "2014年是Docker大红大火的一年， DevOps这个新名词+新职�
 
 为了有效的减少重复劳动和提高生产率，团队决定大胆的使用（当时还不是很成熟）的容器解决方案来尝试做一套全自动安装部署的系统。称之为SAP Business One快速部署云平台！
 
-###本云平台特点及工作机制###
+### 本云平台特点及工作机制
 从软件架构角度来看，本云平台分为后台和前台两部分组成。后台负责自动监视nightly build server、制作docker image；前台负责接受用户提交请求，然后创建并运行docker image。
 
 从拓扑结构角度来看，云平台有1台master server（前台和后台服务都跑在这里），1台build server（专门用来做docker build）以及4台slave server（用来运行特定的docker image）。slave服务器可以扩容。所有6台服务器都是物理机，256GB内存的配置，安装CoreOS来搭建集群。
@@ -43,11 +43,11 @@ summary: "2014年是Docker大红大火的一年， DevOps这个新名词+新职�
 ![fd908555]({{ site.BASE_PATH }}/assets/cloud/2015/fd908555.PNG)
 ![2b7e49ce]({{ site.BASE_PATH }}/assets/cloud/2015/2b7e49ce.PNG)
 
-###如何搭建CoreOS集群###
-####为什么是CoreOS####
+### 如何搭建CoreOS集群
+#### 为什么是CoreOS
 团队的需求是希望一台256GB内存的物理机可以尽可能多的跑SAP Business One的实例。从经验数据得知，跑一个SAP Business One的实例需要20~40GB内存开销，取决于用户连接数和使用方式等。假设平均32GB跑一个，那么256的机器可以跑8个。如果使用传统虚拟化的解决方案，恐怕性能损耗会导致最终只能跑5~6个，另外虚拟机比较难实现弹性内存。我们需要一个轻量级的host os，提供标准的容器运行时。CoreOS的轻巧、精简、自建集群等特性决定了它是这个项目的不二选择！
 
-####安装CoreOS####
+#### 安装CoreOS
 CoreOS的安装和大部分Linux发行版不太一样。常用发行版如Ubuntu、Fedora等下载一张LiveCD刻盘插入安装即可。而CoreOS官方提供多种途径的安装方式，如AWS的image、VMWare的image、"LiveCD"的ISO、及纯粹的tar包。本文只讲述如何把CoreOS安装到一台物理机上。
 
 步骤是下载一个特定版本的"LiveCD"的ISO，（本文使用2015年初的一个老版本557.2.0），大概150m。刻成光盘（或者USB盘），插入物理机，重启后进入CoreOS "Live OS"。然后创建一个yaml文件，把以下内容copy进去。
@@ -136,7 +136,7 @@ coreos:
 * 示例里面把coreos update engine服务禁用了，是因为服务器不希望频繁升级导致重启（关于CoreOS的升级策略请参考官方文档）
 * 更多安装信息请参考CoreOS[官方文档](https://coreos.com/docs/running-coreos/bare-metal/installing-to-disk/)
 
-###创建集群###
+### 创建集群
 CoreOS使用etcd创建集群，使用fleet来调度任务。etcd以自举的方式维护集群，强一致性算法保证集群里始终只有一个lead。对于消费者而言，无须知道当前时刻集群lead是谁，对机器里任何一台节点发送命令都可以达到同样的效果。fleet扩展了systemd的配置功能，使用户可以像编写systemd的服务文件那样来编写fleet的单元文件。
 
 同样，参考示例yaml文件，里面有一段etcd的配置是用来组建集群的。
@@ -196,7 +196,7 @@ datanode.service 0e259400.../10.58.136.164 active running
 
 以及数码海洋上面的一篇[教学文章](https://www.digitalocean.com/community/tutorials/how-to-use-fleet-and-fleetctl-to-manage-your-coreos-cluster)
 
-###如何把SAP Bussiness One安装到Docker容器里去###
+### 如何把SAP Bussiness One安装到Docker容器里去
 这个章节描述如何把SAP的产品容器化，虽说是干货，但是非常有针对性，读者可以选择性阅读。
 
 **SAP HANA**
@@ -219,7 +219,7 @@ SAP Business One客户端安装程序是一个基于InstallShield做出来的set
 
 PS：系统如何操作容器里面的Windows系统？答案是在制作win8.img的时候，扔一个基于Groovy的自研应用程序进去作为服务自启动。此服务负责接收HTTP请求并执行特定的命令。为什么不使用Windows默认支持的PowerShell进行RPC通讯？原因有二，其一是项目的控制中心是Jenkins，使其使用PowerShell与Windows通讯实属困难；其二是团队对PowerShell的知识积累不够用。
 
-###坑，各种坑！###
+### 排坑
 写到这里，基本上所有的功能模块介绍和其工作原理都有所提及了。然后，笔者来列数一下此系统研发时所遇到的各种各样的地雷吧。有些和docker有关，有些和CoreOS有关，有些和SAP产品有关。建议选择阅读。
 
 **Fleet的稳定性问题**
@@ -242,7 +242,7 @@ HANA安装需要执行privileged操作，无语。Dockerfile无法执行privileg
 
 HANA运行时需要初始化一个很大的AIO（异步IO数）。此问题表现为运行第一个HANA实例时没问题，第二个也OK，第三个就启动失败，以后每一个都启动失败。研究表明，AIO是host与容器共享的。解决方案是修改host的AIO数量，根据Oracle给出的最佳实践，这个值设定为1048576最为理想。fs.aio-max-hr=1048576。
 
-###后记###
+### 后记
 起草本文时云系统已经无重大故障稳定运行了三个月了。在这三个月里面，系统还平滑了大小升级了几次，服务客户数累计到达868次。是团队内部运行的相对较成功的项目之一！
 
 本文写了四千多字，如果读者能耐心的看到这里，说明你一定也做了（或者想做）与本文相似的事情。笔者只想说，在技术的海洋里漫游是乐趣无穷但又辛苦万分的！作为技术人员，每个人需要有充足的耐心去克服和逾越各种障碍和壁垒，要有一颗追求完美的心去探索和发现，并且持之以恒！最后，祝所有开发人员写代码零bug，测试人员天天无事干，运维人员零灾难。
